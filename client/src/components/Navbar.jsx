@@ -22,7 +22,13 @@ const Navbar = ({ history }) => {
   return (
     <nav>
       <div className="logo">
-        <h1>Social Media App</h1>
+        <h1>
+          {loggedIn ? (
+            <Link to="/home">Social Media App</Link>
+          ) : (
+            <p>Social Media App</p>
+          )}
+        </h1>
       </div>
 
       {loggedIn && (

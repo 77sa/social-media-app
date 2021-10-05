@@ -9,6 +9,7 @@ import Profile from "./screens/Profile";
 import Navbar from "./components/Navbar";
 
 import "./App.css";
+import Register from "./screens/Register";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -40,6 +41,7 @@ function App() {
               {/* '/home' path should be protected */}
               <Route exact path="/home" component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path='/register' component={Register} />
               <Route exact path="/profile/:username" component={Profile} />
             </PostContext.Provider>
           </UserContext.Provider>

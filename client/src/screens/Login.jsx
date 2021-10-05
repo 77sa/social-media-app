@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context";
 import { login } from "../utils/login";
 import useForm from "../hooks/useForm";
+import { Link } from "react-router-dom";
 
 const Login = ({ history }) => {
   useEffect(() => {
@@ -63,6 +64,9 @@ const Login = ({ history }) => {
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Logging in..." : "Login"}
         </button>
+        <span>
+          Need an account? <Link to="/register">Register</Link>
+        </span>
       </form>
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 
+import "./profile.css";
+
 const Profile = ({ match }) => {
   // will be used to check if profile belongs to current user:
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -18,15 +20,21 @@ const Profile = ({ match }) => {
   }, [posts, match.params.username]);
 
   return (
-    <div>
-      <h2>{match.params.username}</h2>
-      {userPosts.map((post) => {
-        return (
-          <div key={post.id}>
-            <p>{post.content}</p>
-          </div>
-        );
-      })}
+    <div className="profile">
+      <div className="posts">
+        <h2>
+          {match.params.username === currentUser.username
+            ? "Your posts"
+            : `${match.params.username}s posts`}
+        </h2>
+        {userPosts.map((post) => {
+          return (
+            <div className="post" key={post.id}>
+              <p>{post.content}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

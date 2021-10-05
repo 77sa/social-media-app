@@ -25,6 +25,7 @@
   background: lightgray;
   padding: 10px 10px;
   border: none;
+  cursor: pointer;
 }
 
 .posts {

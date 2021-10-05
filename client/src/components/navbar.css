@@ -25,11 +25,9 @@ li {
   margin-left: 1.5rem;
 }
 
-/* a {
-  text-decoration: none;
-  text-align: center;
-  border: 1px solid black;
-} */
+a {
+  color: inherit;
+}
 
 .nav-profile {
   text-decoration: none;
