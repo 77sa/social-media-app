@@ -4,6 +4,9 @@ import { UserContext, PostContext } from "./Context";
 
 import Home from "./screens/Home";
 import Login from "./screens/Login";
+import Profile from "./screens/Profile";
+
+import Navbar from "./components/Navbar";
 
 import "./App.css";
 
@@ -30,17 +33,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* navbar */}
         <main>
           <UserContext.Provider value={userValue}>
             <PostContext.Provider value={postValue}>
-              <Switch>
-                {/* '/' path should be protected */}
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/profile" />
-                <Route exact path="/profile/:username" />
-              </Switch>
+              {/* <Switch> */}
+              <Route path="/" component={Navbar} />
+              {/* '/' path should be protected */}
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/profile/:username" component={Profile} />
+              <Route exact path="/profile" />
+              {/* </Switch> */}
             </PostContext.Provider>
           </UserContext.Provider>
         </main>

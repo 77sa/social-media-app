@@ -23,7 +23,7 @@ const Home = ({ history }) => {
   const submitPost = (e) => {
     e.preventDefault();
 
-    // post request then update posts
+    // post request then update posts in useEffect
     setPosts([
       ...posts,
       {
