@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./navbar.css";
 
 const Navbar = ({ history }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     localStorage.getItem("token") ? setLoggedIn(true) : setLoggedIn(false);
-  });
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");

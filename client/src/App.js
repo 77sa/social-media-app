@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { UserContext, PostContext } from "./Context";
 
@@ -41,7 +41,6 @@ function App() {
               <Route exact path="/home" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profile/:username" component={Profile} />
-              <Route exact path="/profile" />
             </PostContext.Provider>
           </UserContext.Provider>
         </main>

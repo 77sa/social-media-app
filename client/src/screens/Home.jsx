@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = ({ history }) => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const { posts, setPosts } = useContext(PostContext);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Home = ({ history }) => {
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }
-  }, [history]);
+  }, [history, currentUser.username]);
 
   const [content, setContent] = useState("");
 

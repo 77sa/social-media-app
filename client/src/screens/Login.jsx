@@ -17,7 +17,7 @@ const Login = ({ history }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   // set user afer login, use component state for login function
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { setCurrentUser } = useContext(UserContext);
 
   const submit = async (e) => {
     e.preventDefault();
