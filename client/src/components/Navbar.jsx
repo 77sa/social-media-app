@@ -11,7 +11,7 @@ const Navbar = ({ history }) => {
 
   useEffect(() => {
     localStorage.getItem("token") ? setLoggedIn(true) : setLoggedIn(false);
-  }, []);
+  });
 
   const logout = () => {
     localStorage.removeItem("token");

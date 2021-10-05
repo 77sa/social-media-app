@@ -1,0 +1,46 @@
+.home {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 10px;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+}
+
+.status > textarea {
+  background: rgb(238, 238, 238);
+  width: 50%;
+  height: 50px;
+  margin-bottom: 5px;
+  border: none;
+  resize: none;
+  padding: 2px;
+}
+
+.status > button {
+  width: 25%;
+  background: lightgray;
+  padding: 10px 10px;
+  border: none;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  padding: 5px;
+  border: 1px solid black;
+  margin-top: 5px;
+  width: 90%;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* do @media to change status styles */

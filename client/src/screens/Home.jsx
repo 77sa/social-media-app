@@ -3,6 +3,8 @@ import { PostContext, UserContext } from "../Context";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import "./home.css";
+
 const Home = ({ history }) => {
   const { currentUser } = useContext(UserContext);
   const { posts, setPosts } = useContext(PostContext);
@@ -31,16 +33,18 @@ const Home = ({ history }) => {
         content: content,
       },
     ]);
+
+    setContent("");
   };
 
   return (
-    <div>
-      <h2>Hi {currentUser.username}</h2>
-      <div>
-        <input
+    <div className="home">
+      <h2>Write a post: </h2>
+      <div className="status">
+        <textarea
           type="text"
           required
-          placeholder={`Whats on your mind, ${currentUser.username}?`}
+          placeholder={`What's on your mind, ${currentUser.username}?`}
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
@@ -49,11 +53,11 @@ const Home = ({ history }) => {
         </button>
       </div>
 
-      <div>
+      <div className="posts">
         <h2>Posts:</h2>
         {posts.map((post) => {
           return (
-            <div key={post.id}>
+            <div className="post" key={post.id}>
               <h3>
                 <Link to={`/profile/${post.username}`}>{post.username}</Link>
               </h3>
