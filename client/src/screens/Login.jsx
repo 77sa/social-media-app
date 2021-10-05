@@ -25,7 +25,7 @@ const Login = ({ history }) => {
     try {
       await login(user.username, user.password);
       setIsLoading(false);
-      setCurrentUser(user.username);
+      setCurrentUser({ username: user.username });
       localStorage.setItem("token", "token");
       history.push("/");
     } catch (error) {
