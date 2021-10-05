@@ -36,14 +36,12 @@ function App() {
         <main>
           <UserContext.Provider value={userValue}>
             <PostContext.Provider value={postValue}>
-              {/* <Switch> */}
               <Route path="/" component={Navbar} />
-              {/* '/' path should be protected */}
-              <Route exact path="/" component={Home} />
+              {/* '/home' path should be protected */}
+              <Route exact path="/home" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profile/:username" component={Profile} />
               <Route exact path="/profile" />
-              {/* </Switch> */}
             </PostContext.Provider>
           </UserContext.Provider>
         </main>

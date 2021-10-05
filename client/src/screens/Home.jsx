@@ -18,7 +18,6 @@ const Home = ({ history }) => {
   }, [history]);
 
   const [content, setContent] = useState("");
-  const placeholder = `Whats on your mind ${currentUser.username}`;
 
   const submitPost = (e) => {
     e.preventDefault();
@@ -41,7 +40,7 @@ const Home = ({ history }) => {
         <input
           type="text"
           required
-          placeholder={placeholder}
+          placeholder={`Whats on your mind, ${currentUser.username}?`}
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />

@@ -27,7 +27,7 @@ const Login = ({ history }) => {
       setIsLoading(false);
       setCurrentUser({ username: user.username });
       localStorage.setItem("token", "token");
-      history.push("/");
+      history.push("/home");
     } catch (error) {
       setIsLoading(false);
       setUser({ username: "", password: "" });

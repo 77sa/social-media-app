@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context";
 import { Link, Redirect } from "react-router-dom";
 
+import "./navbar.css";
+
 const Navbar = ({ history }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -19,19 +21,26 @@ const Navbar = ({ history }) => {
 
   return (
     <nav>
-      <div>
+      <div className="logo">
         <h1>Social Media App</h1>
       </div>
 
       {loggedIn && (
-        <div>
+        <div className="links">
           <ul>
             <li>
-              <Link to={`/profile/${currentUser.username}`}>Your Profile</Link>
+              <Link
+                className="nav-profile"
+                to={`/profile/${currentUser.username}`}
+              >
+                Your Profile
+              </Link>
             </li>
           </ul>
 
-          <button onClick={logout}>Logout</button>
+          <button className="logout" onClick={logout}>
+            Logout
+          </button>
         </div>
       )}
     </nav>
