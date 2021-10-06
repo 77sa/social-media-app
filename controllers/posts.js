@@ -1,12 +1,11 @@
 const Post = require('../models/Post')
-// todo: errorResponse
 
 exports.getAllPosts = async (req, res, next) => {
     try {
         const posts = await Post.find()
         res.json(posts)
     } catch (error) {
-        next(error) // todo: error middleware
+        next(error) 
     }
 }
 
