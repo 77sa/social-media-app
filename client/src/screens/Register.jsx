@@ -1,5 +1,6 @@
 import React from "react";
 import useForm from "../hooks/useForm";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser, handleChange] = useForm({
@@ -68,6 +69,9 @@ const Register = () => {
           />
         </div>
         <button type="submit">Register</button>
+        <span>
+          Already have an account? <Link to="/login">Login</Link>
+        </span>
       </form>
     </div>
   );

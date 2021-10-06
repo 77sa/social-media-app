@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import "./home.css";
 
 const Home = ({ history }) => {
   const { currentUser } = useContext(UserContext);
   const { posts, setPosts } = useContext(PostContext);
+
+  const [content, setContent] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!currentUser.username) {
@@ -19,20 +23,41 @@ const Home = ({ history }) => {
     }
   }, [history, currentUser.username]);
 
-  const [content, setContent] = useState("");
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const { data } = await axios.get("/api/posts");
+        console.log(data);
 
-  const submitPost = (e) => {
+        if (data.length === 0) return setError("There are no posts right now");
+
+        setPosts([...data]);
+        setError("");
+      } catch (error) {
+        setError(error.response.data.error);
+      }
+    };
+
+    getPosts();
+  }, [history]);
+
+  const submitPost = async (e) => {
     e.preventDefault();
 
-    // post request then update posts in useEffect
-    setPosts([
-      ...posts,
-      {
-        id: uuidv4(),
-        username: currentUser.username,
-        content: content,
-      },
-    ]);
+    // setPosts([
+    //   ...posts,
+    //   {
+    //     id: uuidv4(),
+    //     username: currentUser.username,
+    //     content: content,
+    //   },
+    // ]);
+
+    try {
+      const { data } = axios.post;
+    } catch (error) {
+      setError(error.response.data.error);
+    }
 
     setContent("");
   };
@@ -55,6 +80,7 @@ const Home = ({ history }) => {
 
       <div className="posts">
         <h2>Posts:</h2>
+        {error && <span>{error}</span>}
         {posts.map((post) => {
           return (
             <div className="post" key={post.id}>
@@ -62,6 +88,9 @@ const Home = ({ history }) => {
                 <Link to={`/profile/${post.username}`}>{post.username}</Link>
               </h3>
               <p>{post.content}</p>
+              <span>{post.likes}</span>
+              <span>{post.date.slice(0, 24)}</span>
+              <button>Like</button>
             </div>
           );
         })}
