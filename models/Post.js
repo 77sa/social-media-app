@@ -7,17 +7,18 @@ const PostSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
-        default: Date.now
+        default: Date(Date.now().toLocaleString)
     },
     likes: {
         type: Number,
         required: true,
-        defualt: 0
+        default: 0
     },
     // comments: {
     //     type: Array,
