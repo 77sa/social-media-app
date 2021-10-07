@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import { Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 import "./home.css";
@@ -13,6 +12,7 @@ const Home = ({ history }) => {
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
 
+  // auth
   useEffect(() => {
     if (!currentUser.username) {
       localStorage.removeItem("token");
@@ -23,38 +23,32 @@ const Home = ({ history }) => {
     }
   }, [history, currentUser.username]);
 
+  // This will be called on render and new post:
+  const getPosts = async () => {
+    try {
+      const { data } = await axios.get("/api/posts");
+
+      setPosts([...data]);
+      setError("");
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const { data } = await axios.get("/api/posts");
-        console.log(data);
-
-        if (data.length === 0) return setError("There are no posts right now");
-
-        setPosts([...data]);
-        setError("");
-      } catch (error) {
-        setError(error.response.data.error);
-      }
-    };
-
     getPosts();
-  }, [history]);
+  }, []);
 
   const submitPost = async (e) => {
     e.preventDefault();
 
-    // setPosts([
-    //   ...posts,
-    //   {
-    //     id: uuidv4(),
-    //     username: currentUser.username,
-    //     content: content,
-    //   },
-    // ]);
-
     try {
-      const { data } = axios.post;
+      const newPost = {
+        username: currentUser.username,
+        content,
+      };
+      await axios.post("/api/posts", newPost); //add auth headers
+      getPosts();
     } catch (error) {
       setError(error.response.data.error);
     }
@@ -81,19 +75,27 @@ const Home = ({ history }) => {
       <div className="posts">
         <h2>Posts:</h2>
         {error && <span>{error}</span>}
-        {posts.map((post) => {
-          return (
-            <div className="post" key={post.id}>
-              <h3>
-                <Link to={`/profile/${post.username}`}>{post.username}</Link>
-              </h3>
-              <p>{post.content}</p>
-              <span>{post.likes}</span>
-              <span>{post.date.slice(0, 24)}</span>
-              <button>Like</button>
-            </div>
-          );
-        })}
+        {!posts ? (
+          <h2>No posts</h2>
+        ) : (
+          posts.map((post) => {
+            return (
+              <div className="post" key={post._id}>
+                <h3>
+                  <Link to={`/profile/${post.username}`}>{post.username}</Link>
+                </h3>
+                <p>{post.content}</p>
+                <span>{post.likes}</span>
+                <span>{post.date.slice(0, 24)}</span>
+                {/* todo: (styles+onClicks) */}
+                <button>Like</button>
+                {currentUser.username === post.username && (
+                  <button>Delete</button>
+                )}
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

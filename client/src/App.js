@@ -17,13 +17,7 @@ function App() {
   });
 
   // Get request will be made after successful login, posts will be accessable on user profiles
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      username: "admin",
-      content: "this is the first post",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const userValue = useMemo(
     () => ({ currentUser, setCurrentUser }),

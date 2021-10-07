@@ -1,23 +1,31 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
+import axios from "axios";
 
 import "./profile.css";
 
-const Profile = ({ match }) => {
+const Profile = ({ history, match }) => {
   // will be used to check if profile belongs to current user:
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
-  const { posts } = useContext(PostContext);
+  const { posts, setPosts } = useContext(PostContext);
 
-  // useEffect to get posts from this user
   const [userPosts, setUserPosts] = useState([]);
-  useEffect(() => {
-    const filtered = posts.filter(
-      (post) => post.username === match.params.username
-    );
+  const [error, setError] = useState("");
 
-    setUserPosts(filtered);
-  }, [posts, match.params.username]);
+  const getUserPosts = async () => {
+    try {
+      const { data } = await axios.get(`/api/posts/${match.params.username}`);
+      setUserPosts(data);
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
+  useEffect(() => {
+    setPosts([]);
+    getUserPosts();
+  }, []);
 
   return (
     <div className="profile">
@@ -29,8 +37,16 @@ const Profile = ({ match }) => {
         </h2>
         {userPosts.map((post) => {
           return (
-            <div className="post" key={post.id}>
+            <div className="post" key={post._id}>
               <p>{post.content}</p>
+              <span>{post.likes}</span>
+              <span>{post.date.slice(0, 24)}</span>
+              <button>Like</button>
+              {match.params.username === currentUser.username && (
+                <>
+                  <button>Delete</button>
+                </>
+              )}
             </div>
           );
         })}

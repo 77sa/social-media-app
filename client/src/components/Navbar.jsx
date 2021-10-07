@@ -11,6 +11,8 @@ const Navbar = ({ history }) => {
 
   useEffect(() => {
     localStorage.getItem("token") ? setLoggedIn(true) : setLoggedIn(false);
+
+    loggedIn && history.location.pathname === "/" && history.push("/home");
   });
 
   const logout = () => {
@@ -35,12 +37,15 @@ const Navbar = ({ history }) => {
         <div className="links">
           <ul>
             <li>
-              <Link
-                className="nav-profile"
-                to={`/profile/${currentUser.username}`}
-              >
-                Your Profile
-              </Link>
+              {history.location.pathname !==
+                `/profile/${currentUser.username}` && (
+                <Link
+                  className="nav-profile"
+                  to={`/profile/${currentUser.username}`}
+                >
+                  Your Profile
+                </Link>
+              )}
             </li>
           </ul>
 
