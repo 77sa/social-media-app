@@ -56,9 +56,19 @@ const Home = ({ history }) => {
     setContent("");
   };
 
+  const deletePost = async (id) => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      // success message
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
   return (
     <div className="home">
-      <h2>Write a post: </h2>
+      <h2 className="write-post">Write a post: </h2>
       <div className="status">
         <textarea
           type="text"
@@ -73,14 +83,14 @@ const Home = ({ history }) => {
       </div>
 
       <div className="posts">
-        <h2>Posts:</h2>
+        <h2>Posts</h2>
         {error && <span>{error}</span>}
         {!posts ? (
           <h2>No posts</h2>
         ) : (
           posts.map((post) => {
             return (
-              <div className="post" key={post._id}>
+              <div className="post-home" key={post._id}>
                 <h3>
                   <Link to={`/profile/${post.username}`}>{post.username}</Link>
                 </h3>
@@ -90,7 +100,7 @@ const Home = ({ history }) => {
                 {/* todo: (styles+onClicks) */}
                 <button>Like</button>
                 {currentUser.username === post.username && (
-                  <button>Delete</button>
+                  <button onClick={() => deletePost(post._id)}>Delete</button>
                 )}
               </div>
             );

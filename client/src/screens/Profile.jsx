@@ -22,6 +22,16 @@ const Profile = ({ history, match }) => {
     }
   };
 
+  const deletePost = async (id) => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      // success message
+      getUserPosts();
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
   useEffect(() => {
     setPosts([]);
     getUserPosts();
@@ -44,7 +54,7 @@ const Profile = ({ history, match }) => {
               <button>Like</button>
               {match.params.username === currentUser.username && (
                 <>
-                  <button>Delete</button>
+                  <button onClick={() => deletePost(post._id)}>Delete</button>
                 </>
               )}
             </div>
