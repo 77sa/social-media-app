@@ -11,8 +11,8 @@ exports.register = async (req, res, next) => {
 
     if(!username || !email || !password) return next(new ErrorResponse('Please comeplete the form', 400))
 
-    if(await User.findOne({username})) res.json({success: false, message: "Username is taken"})
-    if(await User.findOne({email})) res.json({success: false, message: "Email is already registered"})
+    if(await User.findOne({username})) return res.json({success: false, message: "Username is taken"})
+    if(await User.findOne({email})) return res.json({success: false, message: "Email is already registered"})
 
     try {
         const user = await User.create({username, email, password})
