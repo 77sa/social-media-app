@@ -6,12 +6,37 @@ import "./profile.css";
 
 const Profile = ({ history, match }) => {
   // will be used to check if profile belongs to current user:
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const { posts, setPosts } = useContext(PostContext);
 
   const [userPosts, setUserPosts] = useState([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getUser = async () => {
+    setIsLoading(true);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get("/api/auth/getUser", config);
+
+      setCurrentUser({ username: data.username });
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    } catch (error) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+      setError(error.response.data.message);
+    }
+  };
 
   const getUserPosts = async () => {
     try {
@@ -33,6 +58,7 @@ const Profile = ({ history, match }) => {
   };
 
   useEffect(() => {
+    getUser();
     setPosts([]);
     getUserPosts();
   }, []);
@@ -40,9 +66,12 @@ const Profile = ({ history, match }) => {
   return (
     <div className="profile">
       <div className="posts">
+        {error && <span>{error}</span>}
         <h2>
           {match.params.username === currentUser.username
-            ? "Your posts"
+            ? isLoading
+              ? "Loading..."
+              : "Your posts"
             : `${match.params.username}s posts`}
         </h2>
         {userPosts.map((post) => {

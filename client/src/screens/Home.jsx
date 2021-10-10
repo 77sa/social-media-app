@@ -6,24 +6,27 @@ import axios from "axios";
 import "./home.css";
 
 const Home = ({ history }) => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const { posts, setPosts } = useContext(PostContext);
 
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
 
-  // auth
-  useEffect(() => {
-    if (!currentUser.username) {
-      localStorage.removeItem("token");
-      history.push("/login");
-    }
-    if (!localStorage.getItem("token")) {
-      history.push("/login");
-    }
-  }, [history, currentUser.username]);
+  const getUser = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get("/api/auth/getUser", config);
 
-  // This will be called on render and new post:
+      setCurrentUser({ username: data.username });
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
   const getPosts = async () => {
     try {
       const { data } = await axios.get("/api/posts");
@@ -31,13 +34,19 @@ const Home = ({ history }) => {
       setPosts([...data]);
       setError("");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
     }
   };
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      history.push("/login");
+    }
+
+    if (!currentUser.username) getUser();
+
     getPosts();
-  }, []);
+  }, [history]);
 
   const submitPost = async (e) => {
     e.preventDefault();
@@ -50,7 +59,7 @@ const Home = ({ history }) => {
       await axios.post("/api/posts", newPost); //add auth headers
       getPosts();
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
     }
 
     setContent("");
@@ -62,7 +71,7 @@ const Home = ({ history }) => {
       // success message
       getPosts();
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
     }
   };
 
