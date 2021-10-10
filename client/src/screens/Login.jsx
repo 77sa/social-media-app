@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext, AuthContext } from "../Context";
-import { login } from "../utils/login";
 import useForm from "../hooks/useForm";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Login = ({ history }) => {
   const { authMessage, setAuthMessage } = useContext(AuthContext);
@@ -25,15 +25,16 @@ const Login = ({ history }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await login(user.username, user.password);
+      const { data } = await axios.post("/api/auth/login", user);
       setIsLoading(false);
       setCurrentUser({ username: user.username });
-      localStorage.setItem("token", "token");
+      localStorage.setItem("token", data.token);
       history.push("/home");
     } catch (error) {
       setIsLoading(false);
+      setAuthMessage("");
       setUser({ username: "", password: "" });
-      setError("Invalid credentials");
+      setError(error.response.data.message);
     }
   };
 

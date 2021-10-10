@@ -35,7 +35,7 @@ const Register = ({ history }) => {
       setAuthMessage("You can now log in");
       history.push("/login");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response.data.message);
     }
   };
   return (
