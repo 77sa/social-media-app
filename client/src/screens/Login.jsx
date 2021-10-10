@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Context";
+import { UserContext, AuthContext } from "../Context";
 import { login } from "../utils/login";
 import useForm from "../hooks/useForm";
 import { Link } from "react-router-dom";
 
 const Login = ({ history }) => {
+  const { authMessage, setAuthMessage } = useContext(AuthContext);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       history.push("/");
@@ -41,6 +42,7 @@ const Login = ({ history }) => {
       <form onSubmit={submit}>
         <h2>Login</h2>
         {error && <span>{error}</span>}
+        {authMessage && <span>{authMessage}</span>}
         <div>
           <label htmlFor="username">Username: </label>
           <input

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import useForm from "../hooks/useForm";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../Context";
 
-const Register = () => {
+const Register = ({ history }) => {
+  const { authMessage, setAuthMessage } = useContext(AuthContext);
   const [user, setUser, handleChange] = useForm({
     email: "",
     username: "",
@@ -11,23 +14,35 @@ const Register = () => {
   });
   const [error, setError] = useForm("");
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
     const { email, username, password, password2 } = user;
 
-    if (password !== password2) return setError("Passwords do not match");
-
+    if (password !== password2) {
+      setUser({ ...user, password: "", password2: "" });
+      return setError("Passwords do not match");
+    }
     try {
-      // axios post
+      const { data } = await axios.post("/api/auth/register", {
+        email,
+        username,
+        password,
+      });
+      if (!data.success) {
+        return setError(data.message);
+      }
+      setAuthMessage("You can now log in");
+      history.push("/login");
     } catch (error) {
-      // set error response
+      setError(error.response.data.error);
     }
   };
   return (
     <div>
       <form onSubmit={submit}>
         <h2>Register</h2>
+        {error && <span>{error}</span>}
         <div>
           <label htmlFor="email">Email: </label>
           <input
