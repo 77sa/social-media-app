@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema({
     },
 })
 
-// Will be used to resetting password:
 UserSchema.pre('save', async function(next) {
     if(!this.isModified('password')){
         next()

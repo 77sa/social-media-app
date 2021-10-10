@@ -11,12 +11,14 @@ exports.register = async (req, res, next) => {
 
     if(!username || !email || !password) return next(new ErrorResponse('Please comeplete the form', 400))
 
+    if(await User.findOne({username})) res.json({success: false, message: "Username is taken"})
+    if(await User.findOne({email})) res.json({success: false, message: "Email is already registered"})
+
     try {
         const user = await User.create({username, email, password})
         sendtoken(user, 201, res)
     } catch (error) {
         next(error)
-        console.log(error)
     }
 }
 
