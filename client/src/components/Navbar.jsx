@@ -22,7 +22,7 @@ const Navbar = ({ history }) => {
   };
 
   return (
-    <nav>
+    <nav className="sticky">
       <div className="logo">
         <h1>
           {loggedIn ? (
