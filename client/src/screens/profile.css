@@ -3,16 +3,10 @@
   justify-content: center;
   flex-direction: column;
   padding: 10px 10px;
+  padding-top: 80px;
 }
 
 .posts {
   display: flex;
   flex-direction: column;
-}
-
-.post {
-  padding: 5px;
-  border: 1px solid black;
-  margin-top: 5px;
-  width: 90%;
 }

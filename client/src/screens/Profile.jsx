@@ -2,18 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import axios from "axios";
 
+import Post from "../components/Post";
+
 import "./profile.css";
 
 const Profile = ({ history, match }) => {
   // will be used to check if profile belongs to current user:
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
-  const { posts, setPosts } = useContext(PostContext);
+  const { setPosts } = useContext(PostContext);
 
   const [userPosts, setUserPosts] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Keep user on refresh:
   const getUser = async () => {
     setIsLoading(true);
 
@@ -31,10 +34,8 @@ const Profile = ({ history, match }) => {
         setIsLoading(false);
       }, 500);
     } catch (error) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-      setError(error.response.data.message);
+      localStorage.removeItem("token");
+      history.push("/login");
     }
   };
 
@@ -76,17 +77,11 @@ const Profile = ({ history, match }) => {
         </h2>
         {userPosts.map((post) => {
           return (
-            <div className="post" key={post._id}>
-              <p>{post.content}</p>
-              <span>{post.likes}</span>
-              <span>{post.date.slice(0, 24)}</span>
-              <button>Like</button>
-              {match.params.username === currentUser.username && (
-                <>
-                  <button onClick={() => deletePost(post._id)}>Delete</button>
-                </>
-              )}
-            </div>
+            <Post
+              post={post}
+              currentUser={currentUser}
+              deletePost={deletePost}
+            />
           );
         })}
       </div>

@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
-import { Link } from "react-router-dom";
 import axios from "axios";
+
+import CreatePost from "../components/CreatePost";
+import Post from "../components/Post";
 
 import "./home.css";
 
@@ -77,44 +79,25 @@ const Home = ({ history }) => {
 
   return (
     <div className="home">
-      <h2 className="write-post">Write a post: </h2>
-      <div className="status">
-        <textarea
-          type="text"
-          required
-          placeholder={`What's on your mind, ${currentUser.username}?`}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <button type="submit" onClick={submitPost} disabled={!content}>
-          Post
-        </button>
-      </div>
+      <CreatePost
+        currentUser={currentUser}
+        content={content}
+        setContent={setContent}
+        submitPost={submitPost}
+      />
 
       <div className="posts">
         <h2>Posts</h2>
         {error && <span>{error}</span>}
-        {!posts ? (
-          <h2>No posts</h2>
-        ) : (
-          posts.map((post) => {
-            return (
-              <div className="post-home" key={post._id}>
-                <h3>
-                  <Link to={`/profile/${post.username}`}>{post.username}</Link>
-                </h3>
-                <p>{post.content}</p>
-                <span>{post.likes}</span>
-                <span>{post.date.slice(0, 24)}</span>
-                {/* todo: (styles+onClicks) */}
-                <button>Like</button>
-                {currentUser.username === post.username && (
-                  <button onClick={() => deletePost(post._id)}>Delete</button>
-                )}
-              </div>
-            );
-          })
-        )}
+        {posts.map((post) => {
+          return (
+            <Post
+              post={post}
+              currentUser={currentUser}
+              deletePost={deletePost}
+            />
+          );
+        })}
       </div>
     </div>
   );

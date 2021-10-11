@@ -1,0 +1,10 @@
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.write-post {
+  margin-left: 24.5%;
+  width: 50%;
+}
