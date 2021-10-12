@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 
 import "./post.css";
 
-const Post = ({ post, currentUser, deletePost }) => {
+const Post = ({ post, currentUser, deletePost, likePost }) => {
   return (
-    <div className="post" key={post._id}>
+    <div className="post">
       <h3>
         <Link to={`/profile/${post.username}`}>{post.username}</Link>
       </h3>
       <p>{post.content}</p>
       <span>{post.likes}</span>
       <span>{post.date.slice(0, 24)}</span>
-      {/* todo: (styles+onClicks) */}
-      <button>Like</button>
+      <button onClick={() => likePost(post._id)}>
+        {post.likedBy.includes(currentUser.username) ? "unlike" : "like"}
+      </button>
       {currentUser.username === post.username && (
         <button onClick={() => deletePost(post._id)}>Delete</button>
       )}

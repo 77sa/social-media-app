@@ -85,6 +85,17 @@ const Home = ({ history }) => {
     }
   };
 
+  const likePost = async (id) => {
+    try {
+      await axios.patch(`/api/posts/like/${id}`, {
+        username: currentUser.username,
+      });
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
   return (
     <div className="home">
       {isLoading ? (
@@ -105,9 +116,11 @@ const Home = ({ history }) => {
             {posts.map((post) => {
               return (
                 <Post
+                  key={post._id}
                   post={post}
                   currentUser={currentUser}
                   deletePost={deletePost}
+                  likePost={likePost}
                 />
               );
             })}
