@@ -10,7 +10,7 @@ import "./createpost.css";
 const CreatePost = ({ currentUser, content, setContent, submitPost }) => {
   return (
     <ThemeProvider theme={theme}>
-      <div>
+      <div className="box">
         <div className="status">
           <TextField
             className="textfield"
@@ -18,22 +18,23 @@ const CreatePost = ({ currentUser, content, setContent, submitPost }) => {
             label="Status"
             placeholder={`What's on your mind, ${currentUser.username}?`}
             multiline
-            rows={4}
+            rows={2}
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
+
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ marginTop: "10px", width: "100%" }}
+            size="large"
+            onClick={submitPost}
+            disabled={!content}
+          >
+            Post
+          </Button>
         </div>
       </div>
-      <Button
-        type="submit"
-        variant="contained"
-        className="submit"
-        size="large"
-        onClick={submitPost}
-        disabled={!content}
-      >
-        Post
-      </Button>
     </ThemeProvider>
   );
 };

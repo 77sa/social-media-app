@@ -93,14 +93,13 @@ const Home = ({ history }) => {
         </div>
       ) : (
         <>
-          <CreatePost
-            currentUser={currentUser}
-            content={content}
-            setContent={setContent}
-            submitPost={submitPost}
-          />
-
           <div className="posts">
+            <CreatePost
+              currentUser={currentUser}
+              content={content}
+              setContent={setContent}
+              submitPost={submitPost}
+            />
             <h2>Posts</h2>
             {error && <span>{error}</span>}
             {posts.map((post) => {
