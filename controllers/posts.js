@@ -50,13 +50,19 @@ exports.likePost = async (req, res, next) => {
     try {
         const post = await Post.findById(id)
 
-        if(post.likedBy.includes(username)) return res.json({success: false})
+        if(post.likedBy.includes(username)){
+            const index = post.likedBy.indexOf(username)
+            post.likedBy.splice(index, 1)
+            post.likes -= 1
+            post.save()
+            return res.json({success: true, message: "Unliked"})
+        } 
 
         post.likes += 1
         post.likedBy.push(username)
         post.save()
 
-        res.json({success: true})
+        res.json({success: true, message: "Liked"})
     } catch (error) {
         next(error)
     }
