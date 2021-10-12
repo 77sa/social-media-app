@@ -20,11 +20,22 @@ const PostSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
-    // comments: {
-    //     type: Array,
-    //     required: false
-    //     default: [] 
-    // },
+    comments:[{
+        body: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: String,
+            required: true,
+            default: Date(Date.now().toLocaleString)
+        },
+        likes: {
+            type: Number,
+            required: true,
+            default: 0
+        }
+    }]
 })
 
 module.exports = mongoose.model('post', PostSchema)
