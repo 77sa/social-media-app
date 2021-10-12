@@ -45,11 +45,17 @@ exports.deletePost = async (req, res, next) => {
 
 exports.likePost = async (req, res, next) => {
     const {id} = req.params
+    const {username} = req.body
 
     try {
         const post = await Post.findById(id)
+
+        if(post.likedBy.includes(username)) return res.json({success: false})
+
         post.likes += 1
+        post.likedBy.push(username)
         post.save()
+
         res.json({success: true})
     } catch (error) {
         next(error)
