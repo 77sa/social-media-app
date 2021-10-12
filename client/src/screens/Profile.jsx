@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 import Post from "../components/Post";
 
 import "./profile.css";
 
 const Profile = ({ history, match }) => {
-  // will be used to check if profile belongs to current user:
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const { setPosts } = useContext(PostContext);
@@ -18,8 +18,6 @@ const Profile = ({ history, match }) => {
 
   // Keep user on refresh:
   const getUser = async () => {
-    setIsLoading(true);
-
     const config = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -29,10 +27,6 @@ const Profile = ({ history, match }) => {
       const { data } = await axios.get("/api/auth/getUser", config);
 
       setCurrentUser({ username: data.username });
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
     } catch (error) {
       localStorage.removeItem("token");
       history.push("/login");
@@ -59,32 +53,40 @@ const Profile = ({ history, match }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getUser();
     setPosts([]);
     getUserPosts();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, []);
 
   return (
     <div className="profile">
-      <div className="posts">
-        {error && <span>{error}</span>}
-        <h2>
-          {match.params.username === currentUser.username
-            ? isLoading
-              ? "Loading..."
-              : "Your posts"
-            : `${match.params.username}s posts`}
-        </h2>
-        {userPosts.map((post) => {
-          return (
-            <Post
-              post={post}
-              currentUser={currentUser}
-              deletePost={deletePost}
-            />
-          );
-        })}
-      </div>
+      {error && <span>{error}</span>}
+      {isLoading ? (
+        <div className="progress">
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      ) : (
+        <div className="posts">
+          <h2>
+            {match.params.username === currentUser.username
+              ? "Your posts"
+              : `${match.params.username}s posts`}
+          </h2>
+          {userPosts.map((post) => {
+            return (
+              <Post
+                post={post}
+                currentUser={currentUser}
+                deletePost={deletePost}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

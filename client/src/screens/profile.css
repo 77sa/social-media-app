@@ -5,8 +5,3 @@
   padding: 10px 10px;
   padding-top: 80px;
 }
-
-.posts {
-  display: flex;
-  flex-direction: column;
-}

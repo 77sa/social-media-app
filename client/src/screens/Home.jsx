@@ -5,6 +5,8 @@ import axios from "axios";
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 
+import { CircularProgress } from "@mui/material"; //todo
+
 import "./home.css";
 
 const Home = ({ history }) => {
@@ -13,6 +15,7 @@ const Home = ({ history }) => {
 
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUser = async () => {
     const config = {
@@ -25,7 +28,8 @@ const Home = ({ history }) => {
 
       setCurrentUser({ username: data.username });
     } catch (error) {
-      setError(error.response.data.message);
+      localStorage.removeItem("token");
+      history.push("/login");
     }
   };
 
@@ -41,6 +45,7 @@ const Home = ({ history }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }
@@ -48,6 +53,9 @@ const Home = ({ history }) => {
     if (!currentUser.username) getUser();
 
     getPosts();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, [history]);
 
   const submitPost = async (e) => {
@@ -79,26 +87,34 @@ const Home = ({ history }) => {
 
   return (
     <div className="home">
-      <CreatePost
-        currentUser={currentUser}
-        content={content}
-        setContent={setContent}
-        submitPost={submitPost}
-      />
+      {isLoading ? (
+        <div className="progress">
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      ) : (
+        <>
+          <CreatePost
+            currentUser={currentUser}
+            content={content}
+            setContent={setContent}
+            submitPost={submitPost}
+          />
 
-      <div className="posts">
-        <h2>Posts</h2>
-        {error && <span>{error}</span>}
-        {posts.map((post) => {
-          return (
-            <Post
-              post={post}
-              currentUser={currentUser}
-              deletePost={deletePost}
-            />
-          );
-        })}
-      </div>
+          <div className="posts">
+            <h2>Posts</h2>
+            {error && <span>{error}</span>}
+            {posts.map((post) => {
+              return (
+                <Post
+                  post={post}
+                  currentUser={currentUser}
+                  deletePost={deletePost}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };
