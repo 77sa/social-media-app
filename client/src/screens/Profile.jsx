@@ -42,16 +42,6 @@ const Profile = ({ history, match }) => {
     }
   };
 
-  const deletePost = async (id) => {
-    try {
-      await axios.delete(`/api/posts/${id}`);
-      // success message
-      getUserPosts();
-    } catch (error) {
-      setError(error.response.data.error);
-    }
-  };
-
   useEffect(() => {
     setIsLoading(true);
     getUser();
@@ -62,31 +52,55 @@ const Profile = ({ history, match }) => {
     }, 500);
   }, []);
 
+  const deletePost = async (id) => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      // success message
+      getUserPosts();
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
+  const likePost = async (id) => {
+    try {
+      await axios.patch(`/api/posts/like/${id}`, {
+        username: currentUser.username,
+      });
+      getUserPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
   return (
-    <div className="profile">
-      {error && <span>{error}</span>}
-      {isLoading ? (
-        <div className="progress">
-          <CircularProgress style={{ color: "black" }} />
-        </div>
-      ) : (
-        <div className="posts">
-          <h2>
-            {match.params.username === currentUser.username
-              ? "Your posts"
-              : `${match.params.username}s posts`}
-          </h2>
-          {userPosts.map((post) => {
-            return (
-              <Post
-                post={post}
-                currentUser={currentUser}
-                deletePost={deletePost}
-              />
-            );
-          })}
-        </div>
-      )}
+    <div className="center">
+      <div className="profile">
+        {error && <span>{error}</span>}
+        {isLoading ? (
+          <div className="progress">
+            <CircularProgress style={{ color: "white" }} />
+          </div>
+        ) : (
+          <div className="posts">
+            <h2>
+              {match.params.username === currentUser.username
+                ? "Your posts"
+                : `${match.params.username}s posts`}
+            </h2>
+            {userPosts.map((post) => {
+              return (
+                <Post
+                  post={post}
+                  currentUser={currentUser}
+                  deletePost={deletePost}
+                  likePost={likePost}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

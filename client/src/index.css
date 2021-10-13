@@ -21,3 +21,27 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.form-container {
+  margin-top: 80px;
+  background: white;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  width: 60%;
+}
+
+.form-container > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.form-container > form > div {
+  margin-top: 5px;
+}
+
+.form-container > form > span {
+  margin-top: 5px;
+}

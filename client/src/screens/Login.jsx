@@ -4,8 +4,15 @@ import useForm from "../hooks/useForm";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+import { theme } from "../mui-theme";
+import { ThemeProvider } from "@mui/material/styles";
+
 const Login = ({ history }) => {
   const { authMessage, setAuthMessage } = useContext(AuthContext);
+  const { setCurrentUser } = useContext(UserContext);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       history.push("/");
@@ -18,8 +25,6 @@ const Login = ({ history }) => {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // set user afer login, use component state for login function
-  const { setCurrentUser } = useContext(UserContext);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -39,39 +44,56 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <h2>Login</h2>
-        {error && <span>{error}</span>}
-        {authMessage && <span>{authMessage}</span>}
-        <div>
-          <label htmlFor="username">Username: </label>
-          <input
-            type="text"
-            name="username"
-            required
-            value={user.username}
-            onChange={handleChange}
-          />
+    <ThemeProvider theme={theme}>
+      <div className="center">
+        <div className="form-container">
+          <form onSubmit={submit}>
+            <h2>Login</h2>
+            {error && <span>{error}</span>}
+            {authMessage && <span>{authMessage}</span>}
+            <div>
+              <TextField
+                id="filled-basic"
+                variant="filled"
+                size="small"
+                style={{ width: "100%" }}
+                type="text"
+                name="username"
+                label="Username"
+                required
+                value={user.username}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <TextField
+                id="filled-basic"
+                variant="filled"
+                size="small"
+                style={{ width: "100%" }}
+                type="password"
+                name="password"
+                label="Password"
+                required
+                value={user.password}
+                onChange={handleChange}
+              />
+            </div>
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={isLoading}
+              style={{ marginTop: "5px" }}
+            >
+              {isLoading ? "Logging in..." : "Login"}
+            </Button>
+            <span>
+              Need an account? <Link to="/register">Register</Link>
+            </span>
+          </form>
         </div>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
-            type="password"
-            name="password"
-            required
-            value={user.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-        <span>
-          Need an account? <Link to="/register">Register</Link>
-        </span>
-      </form>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

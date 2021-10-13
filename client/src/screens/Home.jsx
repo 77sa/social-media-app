@@ -5,7 +5,7 @@ import axios from "axios";
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 
-import { CircularProgress } from "@mui/material"; //todo
+import { CircularProgress } from "@mui/material";
 
 import "./home.css";
 
@@ -101,7 +101,7 @@ const Home = ({ history }) => {
       <div className="home">
         {isLoading ? (
           <div className="progress">
-            <CircularProgress style={{ color: "black" }} />
+            <CircularProgress style={{ color: "white" }} />
           </div>
         ) : (
           <div className="posts">
