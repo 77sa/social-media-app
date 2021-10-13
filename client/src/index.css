@@ -28,7 +28,7 @@ body {
   color: black;
   padding: 10px;
   border-radius: 5px;
-  width: 60%;
+  width: 30%;
 }
 
 .form-container > form {
@@ -44,4 +44,10 @@ body {
 
 .form-container > form > span {
   margin-top: 5px;
+}
+
+@media (max-width: 584px) {
+  .form-container {
+    width: 90%;
+  }
 }
