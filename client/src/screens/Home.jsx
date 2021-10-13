@@ -97,13 +97,13 @@ const Home = ({ history }) => {
   };
 
   return (
-    <div className="home">
-      {isLoading ? (
-        <div className="progress">
-          <CircularProgress style={{ color: "black" }} />
-        </div>
-      ) : (
-        <>
+    <div className="center">
+      <div className="home">
+        {isLoading ? (
+          <div className="progress">
+            <CircularProgress style={{ color: "black" }} />
+          </div>
+        ) : (
           <div className="posts">
             <CreatePost
               currentUser={currentUser}
@@ -125,8 +125,8 @@ const Home = ({ history }) => {
               );
             })}
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 };

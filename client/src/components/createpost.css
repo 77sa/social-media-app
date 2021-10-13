@@ -1,11 +1,11 @@
 .box {
-  /* background: #5965b2; */
-  border: 2px solid #212c6f;
+  background: #5965b2;
+  /* border: 2px solid #212c6f; */
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  width: 60%;
+  width: 100%;
 }
 
 .status {

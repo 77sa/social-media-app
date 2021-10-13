@@ -10,8 +10,9 @@ const Post = ({ post, currentUser, deletePost, likePost }) => {
         <Link to={`/profile/${post.username}`}>{post.username}</Link>
       </h3>
       <p>{post.content}</p>
-      <span>{post.likes}</span>
       <span>{post.date.slice(0, 24)}</span>
+      <hr />
+      <span>{post.likes}</span>
       <button onClick={() => likePost(post._id)}>
         {post.likedBy.includes(currentUser.username) ? "unlike" : "like"}
       </button>

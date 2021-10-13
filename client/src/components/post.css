@@ -1,6 +1,14 @@
 .post {
-  padding: 5px;
-  border: 1px solid black;
-  margin-top: 5px;
-  width: 90%;
+  padding: 10px;
+  /* border: 2px solid #212c6f; */
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 100%;
+  background: #5965b2;
+  color: white;
+}
+
+.post > hr {
+  margin-top: 3px;
+  margin-bottom: 3px;
 }

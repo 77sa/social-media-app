@@ -1,29 +1,26 @@
+.center {
+  display: flex;
+  justify-content: center;
+}
 .home {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 10px 10px;
+  padding: 10px;
   padding-top: 80px;
-}
-
-.status > textarea {
-  background: rgb(238, 238, 238);
-  width: 50%;
-  height: 50px;
-  margin-bottom: 5px;
-  border: none;
-  resize: none;
-  padding: 2px;
-}
-
-.status > button {
-  width: 25%;
-  background: lightgray;
-  padding: 10px 10px;
-  border: none;
-  cursor: pointer;
+  width: 40%;
 }
 
 a {
   text-decoration: none;
+}
+
+.posts > h2 {
+  padding-top: 10px;
+}
+
+@media (max-width: 584px) {
+  .home {
+    width: 90%;
+  }
 }

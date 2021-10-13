@@ -5,6 +5,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: #212c6f;
+  color: white;
 }
 
 .posts {

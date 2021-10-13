@@ -14,9 +14,11 @@ const CreatePost = ({ currentUser, content, setContent, submitPost }) => {
         <div className="status">
           <TextField
             className="textfield"
-            id="outlined-multiline-static"
+            id="filled-basic"
+            variant="filled"
             label="Status"
             placeholder={`What's on your mind, ${currentUser.username}?`}
+            style={{ background: "white" }}
             multiline
             rows={2}
             value={content}
