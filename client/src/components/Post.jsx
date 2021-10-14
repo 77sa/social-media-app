@@ -1,12 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { TextField, Button, ThemeProvider } from "@mui/material";
 import { theme } from "../mui-theme";
 
 import "./post.css";
 
-const Post = ({ post, currentUser, deletePost, likePost }) => {
+const Post = ({ post, currentUser, getPosts, setError }) => {
+  const deletePost = async (id) => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      // success message
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
+  const likePost = async (id) => {
+    try {
+      await axios.patch(`/api/posts/like/${id}`, {
+        username: currentUser.username,
+      });
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+  };
+
   return (
     <div className="post">
       <h3>

@@ -13,7 +13,6 @@ const Home = ({ history }) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const { posts, setPosts } = useContext(PostContext);
 
-  const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,44 +57,6 @@ const Home = ({ history }) => {
     }, 500);
   }, [history]);
 
-  // const submitPost = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const newPost = {
-  //       username: currentUser.username,
-  //       content,
-  //     };
-  //     await axios.post("/api/posts", newPost); //add auth headers
-  //     getPosts();
-  //   } catch (error) {
-  //     setError(error.response.data.message);
-  //   }
-
-  //   setContent("");
-  // };
-
-  const deletePost = async (id) => {
-    try {
-      await axios.delete(`/api/posts/${id}`);
-      // success message
-      getPosts();
-    } catch (error) {
-      setError(error.response.data.message);
-    }
-  };
-
-  const likePost = async (id) => {
-    try {
-      await axios.patch(`/api/posts/like/${id}`, {
-        username: currentUser.username,
-      });
-      getPosts();
-    } catch (error) {
-      setError(error.response.data.message);
-    }
-  };
-
   return (
     <div className="center">
       <div className="home">
@@ -118,8 +79,8 @@ const Home = ({ history }) => {
                   key={post._id}
                   post={post}
                   currentUser={currentUser}
-                  deletePost={deletePost}
-                  likePost={likePost}
+                  getPosts={getPosts}
+                  setError={setError}
                 />
               );
             })}
