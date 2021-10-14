@@ -32,7 +32,8 @@ const Home = ({ history }) => {
     try {
       const { data } = await axios.get("/api/posts");
 
-      setPosts([...data]);
+      data.reverse();
+      setPosts(data);
       setError("");
     } catch (error) {
       setError(error.response.data.message);

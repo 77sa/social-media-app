@@ -35,6 +35,8 @@ const Profile = ({ history, match }) => {
   const getUserPosts = async () => {
     try {
       const { data } = await axios.get(`/api/posts/${match.params.username}`);
+
+      data.reverse();
       setUserPosts(data);
     } catch (error) {
       setError(error.response.data.error);
