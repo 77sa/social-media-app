@@ -16,7 +16,6 @@ const Profile = ({ history, match }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Keep user on refresh:
   const getUser = async () => {
     const config = {
       headers: {
@@ -52,27 +51,6 @@ const Profile = ({ history, match }) => {
     }, 500);
   }, []);
 
-  const deletePost = async (id) => {
-    try {
-      await axios.delete(`/api/posts/${id}`);
-      // success message
-      getUserPosts();
-    } catch (error) {
-      setError(error.response.data.error);
-    }
-  };
-
-  const likePost = async (id) => {
-    try {
-      await axios.patch(`/api/posts/like/${id}`, {
-        username: currentUser.username,
-      });
-      getUserPosts();
-    } catch (error) {
-      setError(error.response.data.message);
-    }
-  };
-
   return (
     <div className="center">
       <div className="profile">
@@ -91,10 +69,11 @@ const Profile = ({ history, match }) => {
             {userPosts.map((post) => {
               return (
                 <Post
+                  key={post._id}
                   post={post}
                   currentUser={currentUser}
-                  deletePost={deletePost}
-                  likePost={likePost}
+                  getPosts={getUserPosts}
+                  setError={setError}
                 />
               );
             })}

@@ -33,7 +33,6 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
 
   const commentPost = async (id) => {
     try {
-      console.log(config.headers.Authorization);
       await axios.post(`/api/posts/comment/${id}`, { comment }, config);
       getPosts();
     } catch (error) {
