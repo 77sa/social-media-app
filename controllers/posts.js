@@ -67,3 +67,23 @@ exports.likePost = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.commentPost = async (req, res, next) => {
+    const {id} = req.params
+    const {username} = req.user
+    const {comment} = req.body
+
+
+    try {
+        const post = await Post.findById(id)
+
+        post.comments.unshift({username, comment})
+
+        post.save()
+
+        return res.json({success:true, message: "Comment posted"})
+    } catch (error) {
+        next(error)
+    }
+
+}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { config } from "../utils/reqConfig";
 
 import { TextField, Button, ThemeProvider } from "@mui/material";
 import { theme } from "../mui-theme";
@@ -8,10 +9,11 @@ import { theme } from "../mui-theme";
 import "./post.css";
 
 const Post = ({ post, currentUser, getPosts, setError }) => {
+  const [comment, setComment] = useState("");
+
   const deletePost = async (id) => {
     try {
       await axios.delete(`/api/posts/${id}`);
-      // success message
       getPosts();
     } catch (error) {
       setError(error.response.data.message);
@@ -29,13 +31,24 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
     }
   };
 
+  const commentPost = async (id) => {
+    try {
+      console.log(config.headers.Authorization);
+      await axios.post(`/api/posts/comment/${id}`, { comment }, config);
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+      setComment("");
+    }
+  };
+
   return (
     <div className="post">
       <h3>
         <Link to={`/profile/${post.username}`}>{post.username}</Link>
       </h3>
       <p>{post.content}</p>
-      <span>{post.date.slice(0, 24)}</span>
+      <span>{post.date.slice(4, 24)}</span>
       <hr />
       {post.likes > 0 && (
         <>
@@ -61,6 +74,8 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
             label="Comment"
             style={{ background: "white", width: "80%" }}
             InputProps={{ disableUnderline: true }}
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
           />
           <Button
             type="submit"
@@ -73,11 +88,30 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
               borderRadius: "0px",
               boxShadow: "none",
             }}
+            disabled={!comment}
+            onClick={() => commentPost(post._id)}
           >
-            Send
+            Post
           </Button>
         </div>
       </ThemeProvider>
+      {post.comments.length > 0 ? (
+        post.comments.map((comment) => {
+          return (
+            <div key={comment._id}>
+              <h4>
+                <Link to={`/profile/${comment.username}`}>
+                  {comment.username}
+                </Link>
+              </h4>
+              <h5>{comment.date.slice(4, 24)}</h5>
+              <p>{comment.comment}</p>
+            </div>
+          );
+        })
+      ) : (
+        <span>no comments</span>
+      )}
     </div>
   );
 };

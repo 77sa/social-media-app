@@ -22,9 +22,14 @@ const PostSchema = new mongoose.Schema({
     },
     likedBy: [String],
     comments:[{
-        body: {
+        username: {
             type: String,
             required: true
+        },
+        comment: {
+            type: String,
+            required: true,
+            trim: true
         },
         date: {
             type: String,

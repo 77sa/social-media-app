@@ -39,3 +39,5 @@ exports.login = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.getUser = (req, res, next) => {res.send({username: req.user.username})}
