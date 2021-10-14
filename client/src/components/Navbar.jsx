@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context";
 import { Link } from "react-router-dom";
 
+import { Button, ThemeProvider } from "@mui/material";
+import { theme } from "../mui-theme";
+
 import "./navbar.css";
 
 const Navbar = ({ history }) => {
@@ -43,15 +46,23 @@ const Navbar = ({ history }) => {
                   className="nav-profile"
                   to={`/profile/${currentUser.username}`}
                 >
-                  Your Profile
+                  {currentUser.username}
                 </Link>
               )}
             </li>
           </ul>
-
-          <button className="logout" onClick={logout}>
-            Logout
-          </button>
+          <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              style={{ fontWeight: "600", marginLeft: "5px" }}
+              className="logout"
+              onClick={logout}
+            >
+              Logout
+            </Button>
+          </ThemeProvider>
         </div>
       )}
     </nav>
