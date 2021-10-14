@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getConfig } from "../utils/reqConfig";
+import Comments from "./Comment";
 
 import { TextField, Button, ThemeProvider } from "@mui/material";
 import { theme } from "../mui-theme";
@@ -10,6 +11,7 @@ import "./post.css";
 
 const Post = ({ post, currentUser, getPosts, setError }) => {
   const [comment, setComment] = useState("");
+  const [showComments, setShowComments] = useState(false);
 
   const deletePost = async (id) => {
     try {
@@ -35,6 +37,7 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
     try {
       await axios.post(`/api/posts/comment/${id}`, { comment }, getConfig());
       setComment("");
+      setShowComments(true);
       getPosts();
     } catch (error) {
       setError(error.response.data.message);
@@ -66,7 +69,7 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
       </div>
       <hr />
       <ThemeProvider theme={theme}>
-        <div className="comment">
+        <div className="post-comment">
           <TextField
             size="small"
             id="filled-basic"
@@ -95,23 +98,24 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
           </Button>
         </div>
       </ThemeProvider>
-      {post.comments.length > 0 ? (
-        post.comments.map((comment) => {
-          return (
-            <div key={comment._id}>
-              <h4>
-                <Link to={`/profile/${comment.username}`}>
-                  {comment.username}
-                </Link>
-              </h4>
-              <h5>{comment.date.slice(4, 24)}</h5>
-              <p>{comment.comment}</p>
-            </div>
-          );
-        })
-      ) : (
-        <span>no comments</span>
-      )}
+      <div className="toggle-comments">
+        {showComments && (
+          <a onClick={() => setShowComments(false)}>Hide comments</a>
+        )}
+        {post.comments.length > 0 && showComments
+          ? post.comments.map((comment) => {
+              return (
+                <>
+                  <div className="comment-container">
+                    <Comments comment={comment} />
+                  </div>
+                </>
+              );
+            })
+          : post.comments.length > 0 && (
+              <a onClick={() => setShowComments(true)}>Show comments</a>
+            )}
+      </div>
     </div>
   );
 };

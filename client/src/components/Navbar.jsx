@@ -56,7 +56,11 @@ const Navbar = ({ history }) => {
               variant="contained"
               color="secondary"
               size="small"
-              style={{ fontWeight: "600", marginLeft: "5px" }}
+              style={{
+                fontWeight: "600",
+                marginLeft: "5px",
+                boxShadow: "none",
+              }}
               className="logout"
               onClick={logout}
             >

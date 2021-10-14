@@ -7,7 +7,15 @@
   color: white;
 }
 
-.post > hr {
+.toggle-comments > a {
+  cursor: pointer;
   margin-top: 3px;
+}
+
+/* .comment-container {
+
+} */
+
+.post-comment {
   margin-bottom: 3px;
 }

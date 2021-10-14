@@ -9,6 +9,14 @@ body {
   color: white;
 }
 
+hr {
+  border: none;
+  height: 1px;
+  background: rgb(18, 18, 18);
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
 .posts {
   display: flex;
   flex-direction: column;
