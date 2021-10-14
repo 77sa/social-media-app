@@ -19,7 +19,7 @@ a {
   padding-top: 10px;
 }
 
-@media (max-width: 584px) {
+@media (max-width: 850px) {
   .home {
     width: 90%;
   }

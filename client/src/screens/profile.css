@@ -7,7 +7,7 @@
   width: 40%;
 }
 
-@media (max-width: 584px) {
+@media (max-width: 850px) {
   .profile {
     width: 90%;
   }
