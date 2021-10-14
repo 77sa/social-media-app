@@ -58,22 +58,22 @@ const Home = ({ history }) => {
     }, 500);
   }, [history]);
 
-  const submitPost = async (e) => {
-    e.preventDefault();
+  // const submitPost = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const newPost = {
-        username: currentUser.username,
-        content,
-      };
-      await axios.post("/api/posts", newPost); //add auth headers
-      getPosts();
-    } catch (error) {
-      setError(error.response.data.message);
-    }
+  //   try {
+  //     const newPost = {
+  //       username: currentUser.username,
+  //       content,
+  //     };
+  //     await axios.post("/api/posts", newPost); //add auth headers
+  //     getPosts();
+  //   } catch (error) {
+  //     setError(error.response.data.message);
+  //   }
 
-    setContent("");
-  };
+  //   setContent("");
+  // };
 
   const deletePost = async (id) => {
     try {
@@ -107,9 +107,8 @@ const Home = ({ history }) => {
           <div className="posts">
             <CreatePost
               currentUser={currentUser}
-              content={content}
-              setContent={setContent}
-              submitPost={submitPost}
+              getPosts={getPosts}
+              setError={setError}
             />
             <h2>Posts</h2>
             {error && <span>{error}</span>}

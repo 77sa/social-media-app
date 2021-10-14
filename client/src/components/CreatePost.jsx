@@ -1,13 +1,33 @@
-import React from "react";
-import TextField from "@mui/material/TextField";
+import React, { useState } from "react";
+import axios from "axios";
 
+import TextField from "@mui/material/TextField";
 import { theme } from "../mui-theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Button } from "@mui/material";
 
 import "./createpost.css";
 
-const CreatePost = ({ currentUser, content, setContent, submitPost }) => {
+const CreatePost = ({ currentUser, getPosts, setError }) => {
+  const [content, setContent] = useState("");
+
+  const submitPost = async (e) => {
+    e.preventDefault();
+
+    try {
+      const newPost = {
+        username: currentUser.username,
+        content,
+      };
+      await axios.post("/api/posts", newPost); //add auth headers
+      getPosts();
+    } catch (error) {
+      setError(error.response.data.message);
+    }
+
+    setContent("");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="box">
