@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { config } from "../utils/reqConfig";
+import { getConfig } from "../utils/reqConfig";
 
 import { TextField, Button, ThemeProvider } from "@mui/material";
 import { theme } from "../mui-theme";
@@ -33,7 +33,8 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
 
   const commentPost = async (id) => {
     try {
-      await axios.post(`/api/posts/comment/${id}`, { comment }, config);
+      await axios.post(`/api/posts/comment/${id}`, { comment }, getConfig());
+      setComment("");
       getPosts();
     } catch (error) {
       setError(error.response.data.message);

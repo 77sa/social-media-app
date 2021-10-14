@@ -9,6 +9,7 @@ nav {
   align-items: center;
   color: white;
   z-index: 100;
+  border-bottom: 1px solid rgb(18, 18, 18);
 }
 
 .sticky {

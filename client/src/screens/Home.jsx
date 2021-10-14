@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import axios from "axios";
-import { config } from "../utils/reqConfig";
+import { getConfig } from "../utils/reqConfig";
 
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
@@ -19,7 +19,7 @@ const Home = ({ history }) => {
 
   const getUser = async () => {
     try {
-      const { data } = await axios.get("/api/auth/getUser", config);
+      const { data } = await axios.get("/api/auth/getUser", getConfig());
 
       setCurrentUser({ username: data.username });
     } catch (error) {
