@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../Context";
 import axios from "axios";
 
 import TextField from "@mui/material/TextField";
@@ -6,7 +7,8 @@ import { Button } from "@mui/material";
 
 import "./createpost.css";
 
-const CreatePost = ({ currentUser, getPosts, setError }) => {
+const CreatePost = ({ getPosts, setError }) => {
+  const { currentUser } = useContext(UserContext);
   const [content, setContent] = useState("");
 
   const submitPost = async (e) => {

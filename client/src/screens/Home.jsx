@@ -63,11 +63,7 @@ const Home = ({ history }) => {
           </div>
         ) : (
           <div className="posts">
-            <CreatePost
-              currentUser={currentUser}
-              getPosts={getPosts}
-              setError={setError}
-            />
+            <CreatePost getPosts={getPosts} setError={setError} />
             <h2>Posts</h2>
             {error && <span>{error}</span>}
             {posts.map((post) => {
@@ -75,7 +71,6 @@ const Home = ({ history }) => {
                 <Post
                   key={post._id}
                   post={post}
-                  currentUser={currentUser}
                   getPosts={getPosts}
                   setError={setError}
                 />

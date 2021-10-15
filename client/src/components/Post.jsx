@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../Context";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getConfig } from "../utils/reqConfig";
@@ -8,7 +9,8 @@ import { TextField, Button } from "@mui/material";
 
 import "./post.css";
 
-const Post = ({ post, currentUser, getPosts, setError }) => {
+const Post = ({ post, getPosts, setError }) => {
+  const { currentUser } = useContext(UserContext);
   const [comment, setComment] = useState("");
   const [showComments, setShowComments] = useState(false);
 
@@ -100,17 +102,20 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
         </Button>
       </div>
       <div className="toggle-comments">
-        {showComments && (
+        {showComments && post.comments.length > 0 && (
           <a onClick={() => setShowComments(false)}>Hide comments</a>
         )}
         {showComments
           ? post.comments.map((comment) => {
               return (
-                <>
-                  <div className="comment-container">
-                    <Comments comment={comment} />
-                  </div>
-                </>
+                <div key={comment._id}>
+                  <Comments
+                    postid={post._id}
+                    comment={comment}
+                    getPosts={getPosts}
+                    setError={setError}
+                  />
+                </div>
               );
             })
           : post.comments.length > 0 && (
