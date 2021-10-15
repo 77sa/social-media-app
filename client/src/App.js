@@ -14,6 +14,8 @@ import Register from "./screens/Register";
 import Navbar from "./components/Navbar";
 
 import "./App.css";
+import {  ThemeProvider } from "@mui/material";
+import { theme } from "./mui-theme";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -43,6 +45,7 @@ function App() {
         <main>
           <UserContext.Provider value={userValue}>
             <PostContext.Provider value={postValue}>
+            <ThemeProvider theme={theme}>
               <Route path="/" component={Navbar} />
               <AuthContext.Provider value={authValue}>
                 <Route exact path="/login" component={Login} />
@@ -50,6 +53,7 @@ function App() {
               </AuthContext.Provider>
               <Route exact path="/home" component={Home} />
               <Route exact path="/profile/:username" component={Profile} />
+              </ThemeProvider>
             </PostContext.Provider>
           </UserContext.Provider>
         </main>

@@ -4,8 +4,7 @@ import axios from "axios";
 import { getConfig } from "../utils/reqConfig";
 import Comments from "./Comment";
 
-import { TextField, Button, ThemeProvider } from "@mui/material";
-import { theme } from "../mui-theme";
+import { TextField, Button } from "@mui/material";
 
 import "./post.css";
 
@@ -68,41 +67,43 @@ const Post = ({ post, currentUser, getPosts, setError }) => {
         )}
       </div>
       <hr />
-      <ThemeProvider theme={theme}>
-        <div className="post-comment">
-          <TextField
-            size="small"
-            id="filled-basic"
-            variant="filled"
-            label="Comment"
-            style={{ background: "white", width: "80%" }}
-            InputProps={{ disableUnderline: true }}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{
-              width: "20%",
-              minHeight: "48px",
-              borderRadius: "0px",
-              boxShadow: "none",
-            }}
-            disabled={!comment}
-            onClick={() => commentPost(post._id)}
-          >
-            Post
-          </Button>
-        </div>
-      </ThemeProvider>
+      <div className="post-comment">
+        <TextField
+          size="small"
+          id="filled-basic"
+          variant="filled"
+          label="Comment"
+          style={{
+            background: "white",
+            width: "80%",
+          }}
+          autoComplete="off"
+          InputProps={{ disableUnderline: true }}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{
+            width: "20%",
+            minHeight: "48px",
+            borderRadius: "0px",
+            boxShadow: "none",
+          }}
+          disabled={!comment}
+          onClick={() => commentPost(post._id)}
+        >
+          Post
+        </Button>
+      </div>
       <div className="toggle-comments">
         {showComments && (
           <a onClick={() => setShowComments(false)}>Hide comments</a>
         )}
-        {post.comments.length > 0 && showComments
+        {showComments
           ? post.comments.map((comment) => {
               return (
                 <>

@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Context";
 import { Link } from "react-router-dom";
 
-import { Button, ThemeProvider } from "@mui/material";
-import { theme } from "../mui-theme";
+import { Button } from "@mui/material";
 
 import "./navbar.css";
 
@@ -51,22 +50,21 @@ const Navbar = ({ history }) => {
               )}
             </li>
           </ul>
-          <ThemeProvider theme={theme}>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              style={{
-                fontWeight: "600",
-                marginLeft: "5px",
-                boxShadow: "none",
-              }}
-              className="logout"
-              onClick={logout}
-            >
-              Logout
-            </Button>
-          </ThemeProvider>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            style={{
+              fontWeight: "600",
+              marginLeft: "5px",
+              boxShadow: "none",
+            }}
+            className="logout"
+            onClick={logout}
+          >
+            Logout
+          </Button>
         </div>
       )}
     </nav>
