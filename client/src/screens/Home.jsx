@@ -15,7 +15,7 @@ const Home = ({ history }) => {
   const { posts, setPosts } = useContext(PostContext);
 
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getUser = async () => {
     try {
@@ -41,7 +41,6 @@ const Home = ({ history }) => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { PostContext, UserContext } from "../Context";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { getConfig } from "../utils/reqConfig";
+import CreatePost from "../components/CreatePost";
 
 import Post from "../components/Post";
 
@@ -14,16 +16,11 @@ const Profile = ({ history, match }) => {
 
   const [userPosts, setUserPosts] = useState([]);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getUser = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
     try {
-      const { data } = await axios.get("/api/auth/getUser", config);
+      const { data } = await axios.get("/api/auth/getUser", getConfig());
 
       setCurrentUser({ username: data.username });
     } catch (error) {
@@ -44,7 +41,6 @@ const Profile = ({ history, match }) => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getUser();
     setPosts([]);
     getUserPosts();
@@ -63,6 +59,12 @@ const Profile = ({ history, match }) => {
           </div>
         ) : (
           <div className="posts">
+            <div className="profile-info">
+              <h1>{match.params.username}</h1>
+            </div>
+            {match.params.username === currentUser.username && (
+              <CreatePost getPosts={getUserPosts} setError={setError} />
+            )}
             <h2>
               {match.params.username === currentUser.username
                 ? "Your posts"
