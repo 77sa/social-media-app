@@ -1,17 +1,67 @@
 .post {
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  width: 100%;
-  background: #5965b2;
-  color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+    background: #5965b2;
+    color: white;
 }
 
 .toggle-comments > a {
-  cursor: pointer;
-  margin-top: 3px;
+    cursor: pointer;
+    margin-top: 3px;
 }
 
 .post-comment {
-  margin-bottom: 3px;
+    margin-bottom: 3px;
+}
+
+.post-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.dropdown-menu-button {
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-menu-button > div {
+    background-color: rgb(18, 18, 18);
+    border-radius: 100%;
+    padding: 3px;
+    margin-right: 2px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-contents {
+    right: 10px;
+    background: rgb(18, 18, 18);
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+}
+
+.dropdown-contents > a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-contents > a:hover {
+    background: rgb(58, 58, 58);
 }

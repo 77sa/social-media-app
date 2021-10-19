@@ -13,6 +13,7 @@ const Post = ({ post, getPosts, setError }) => {
     const { currentUser } = useContext(UserContext);
     const [comment, setComment] = useState("");
     const [showComments, setShowComments] = useState(false);
+    const [showDropdown, toggleShowDropdown] = useState(false);
 
     const deletePost = async (id) => {
         try {
@@ -46,13 +47,45 @@ const Post = ({ post, getPosts, setError }) => {
         }
     };
 
+    const toggleDropdown = () => {
+        toggleShowDropdown(!showDropdown);
+    };
+
     return (
         <div className="post">
-            <h3>
-                <Link to={`/profile/${post.username}`}>{post.username}</Link>
-            </h3>
+            <div className="post-header">
+                <div className="name-data">
+                    <h3>
+                        <Link to={`/profile/${post.username}`}>
+                            {post.username}
+                        </Link>
+                    </h3>
+                    <h6>{post.date.slice(4, 24)}</h6>
+                </div>
+
+                {currentUser.username === post.username && (
+                    <div className="dropdown">
+                        <div
+                            className="dropdown-menu-button"
+                            onClick={() => toggleDropdown()}
+                        >
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        {showDropdown && (
+                            <div className="dropdown-contents">
+                                <a>Edit</a>
+                                <a onClick={() => deletePost(post._id)}>
+                                    Delete
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+
             <p>{post.content}</p>
-            <span>{post.date.slice(4, 24)}</span>
             <hr />
             {post.likes > 0 && (
                 <>
@@ -66,11 +99,9 @@ const Post = ({ post, getPosts, setError }) => {
                         ? "unlike"
                         : "like"}
                 </button>
-                {currentUser.username === post.username && (
-                    <button onClick={() => deletePost(post._id)}>Delete</button>
-                )}
             </div>
             <hr />
+
             <div className="post-comment">
                 <TextField
                     size="small"
@@ -103,6 +134,7 @@ const Post = ({ post, getPosts, setError }) => {
                     Post
                 </Button>
             </div>
+
             <div className="toggle-comments">
                 {showComments && post.comments.length > 0 && (
                     <a onClick={() => setShowComments(false)}>Hide comments</a>
