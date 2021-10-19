@@ -54,7 +54,7 @@ const Post = ({ post, getPosts, setError }) => {
     return (
         <div className="post">
             <div className="post-header">
-                <div className="name-data">
+                <div className="name-date">
                     <h3>
                         <Link to={`/profile/${post.username}`}>
                             {post.username}
@@ -84,7 +84,7 @@ const Post = ({ post, getPosts, setError }) => {
                     </div>
                 )}
             </div>
-
+            <hr />
             <p>{post.content}</p>
             <hr />
             {post.likes > 0 && (

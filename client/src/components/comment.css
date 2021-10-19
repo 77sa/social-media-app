@@ -1,6 +1,56 @@
 .comment {
-  border: 1px solid rgb(18, 18, 18);
-  border-radius: 5px;
-  padding: 3px;
-  margin-top: 3px;
+    border: 1px solid rgb(18, 18, 18);
+    border-radius: 5px;
+    padding: 3px;
+    margin-top: 3px;
+}
+
+.comment-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.dropdown-menu-button {
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-menu-button > div {
+    background-color: rgb(18, 18, 18);
+    border-radius: 100%;
+    padding: 3px;
+    margin-right: 2px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-contents-comments {
+    right: 10px;
+    background: rgb(18, 18, 18);
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+}
+
+.dropdown-contents-comments > a {
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-contents-comments > a:hover {
+    background: rgb(58, 58, 58);
 }

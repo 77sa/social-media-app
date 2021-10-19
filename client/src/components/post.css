@@ -10,6 +10,8 @@
 .toggle-comments > a {
     cursor: pointer;
     margin-top: 3px;
+    display: flex;
+    justify-content: center;
 }
 
 .post-comment {
