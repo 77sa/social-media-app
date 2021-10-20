@@ -17,7 +17,7 @@ const Post = ({ post, getPosts, setError }) => {
 
     const deletePost = async (id) => {
         try {
-            await axios.delete(`/api/posts/${id}`);
+            await axios.delete(`/api/posts/${id}`, getConfig());
             getPosts();
         } catch (error) {
             setError(error.response.data.message);
@@ -26,9 +26,14 @@ const Post = ({ post, getPosts, setError }) => {
 
     const likePost = async (id) => {
         try {
-            await axios.patch(`/api/posts/like/${id}`, {
-                username: currentUser.username,
-            });
+            await axios.patch(
+                `/api/posts/like/${id}`,
+                {
+                    username: currentUser.username,
+                },
+                getConfig()
+            );
+
             getPosts();
         } catch (error) {
             setError(error.response.data.message);

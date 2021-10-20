@@ -3,21 +3,21 @@ const express = require('express')
 const router = express.Router()
 
 const {getAllPosts, getPostsByUsername, createPost, deletePost, likePost} = require('../controllers/posts')
-// const {protect} = require('../middleware/protected') 
+const {protect} = require('../middleware/protected') 
 
 // get all
-router.route('/').get(getAllPosts)
+router.route('/').get(protect, getAllPosts)
 
 // get single user posts
-router.route('/:username').get(getPostsByUsername)
+router.route('/:username').get(protect, getPostsByUsername)
 
 // post
-router.route('/').post(createPost)
+router.route('/').post(protect, createPost)
 
 // delete
-router.route('/:id').delete(deletePost)
+router.route('/:id').delete(protect, deletePost)
 
 // like
-router.route('/like/:id').patch(likePost)
+router.route('/like/:id').patch(protect, likePost)
 
 module.exports = router
