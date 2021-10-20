@@ -36,6 +36,11 @@ const Comments = ({ postid, comment, getPosts, setError }) => {
         }
     };
 
+    const editPost = async (id) => {
+        alert("TODO");
+        toggleShowDropdown(false);
+    };
+
     const toggleDropdown = () => {
         toggleShowDropdown(!showDropdown);
     };
@@ -64,7 +69,7 @@ const Comments = ({ postid, comment, getPosts, setError }) => {
                         </div>
                         {showDropdown && (
                             <div className="dropdown-contents-comments">
-                                <a>Edit</a>
+                                <a onClick={() => editPost()}>Edit</a>
                                 <a
                                     onClick={() =>
                                         deleteComment(postid, comment._id)

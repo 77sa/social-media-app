@@ -60,6 +60,20 @@ exports.likeComment = async (req, res, next) => {
     }
 }
 
+exports.editComment = async (req, res, next) => {
+    const {postid, commentid} = req.params
+    const {content} = req.body
+    
+    try {
+        const {post, comment} = await findComment(postid, commentid)
+        comment.comment = content
+        post.save()
+        res.json({success: true, message: 'Comment edited'})
+    } catch (error) {
+        next(error)
+    }
+}
+
 async function findComment(postid, commentid){
     const post = await Post.findById(postid)
     const comments = post.comments

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+// implement edit history
 const PostSchema = new mongoose.Schema({
     username: {
         type: String,

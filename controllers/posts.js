@@ -67,3 +67,17 @@ exports.likePost = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.editPost = async (req, res, next) => {
+    const {id} = req.params
+    const {content} = req.body
+    console.log(typeof content)
+    try {
+        const post = await Post.findById(id)
+        post.content = content
+        post.save()
+        res.json({success: true, message: "Post edited"})
+    } catch (error) {
+        next(error)
+    }
+}

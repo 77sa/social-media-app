@@ -52,6 +52,11 @@ const Post = ({ post, getPosts, setError }) => {
         }
     };
 
+    const editPost = async (id) => {
+        alert("TODO");
+        toggleShowDropdown(false);
+    };
+
     const toggleDropdown = () => {
         toggleShowDropdown(!showDropdown);
     };
@@ -80,7 +85,7 @@ const Post = ({ post, getPosts, setError }) => {
                         </div>
                         {showDropdown && (
                             <div className="dropdown-contents">
-                                <a>Edit</a>
+                                <a onClick={() => editPost()}>Edit</a>
                                 <a onClick={() => deletePost(post._id)}>
                                     Delete
                                 </a>

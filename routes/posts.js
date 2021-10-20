@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const {getAllPosts, getPostsByUsername, createPost, deletePost, likePost} = require('../controllers/posts')
+const {getAllPosts, getPostsByUsername, createPost, deletePost, likePost, editPost} = require('../controllers/posts')
 const {protect} = require('../middleware/protected') 
 
 // get all
@@ -19,5 +19,8 @@ router.route('/:id').delete(protect, deletePost)
 
 // like
 router.route('/like/:id').patch(protect, likePost)
+
+// edit
+router.route('/edit/:id').patch(editPost)
 
 module.exports = router
