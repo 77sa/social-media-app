@@ -1,19 +1,18 @@
 .box {
-  background: #5965b2;
-  /* border: 2px solid #212c6f; */
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  width: 100%;
+    background: #5965b2;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
 }
 
 .status {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .textfield {
-  width: 100%;
+    width: 100%;
 }

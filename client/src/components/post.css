@@ -67,3 +67,23 @@
 .dropdown-contents > a:hover {
     background: rgb(58, 58, 58);
 }
+
+.edit-post {
+    background: #5965b2;
+    z-index: 1300;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 90%;
+    color: white;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.edit-post-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
