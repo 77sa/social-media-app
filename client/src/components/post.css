@@ -74,7 +74,7 @@
     padding: 10px;
     border-radius: 5px;
     margin-top: 10px;
-    width: 90%;
+    width: 40%;
     color: white;
     position: fixed;
     bottom: 50%;
@@ -86,4 +86,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 850px) {
+    .edit-post {
+        width: 90%;
+    }
 }
